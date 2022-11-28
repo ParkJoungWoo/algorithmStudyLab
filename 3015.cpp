@@ -1,32 +1,48 @@
 #include <iostream>
 #include <bits/stdc++.h>
+#include <utility>
 #include <stack>
+
+#define V first
+#define Q second
 using namespace std;
 
 int N;
-int ans = 0;
-stack<int>s;
+long long ans = 0;
+stack<pair<int,int>>s;
 
 int main(){
 	ios::sync_with_stdio(0);
 	cin.tie(0);
 	cin >> N;
 	while(N--){
-		int right;
-		cin >> right;
+		long m;
+		cin >> m;
 		if(s.empty()){
-			s.push(right);
-		} else if(s.top() >= right){
+			s.push(make_pair(m, 1));
+		} else if(s.top().V > m){
+			s.push(make_pair(m, 1));
 			ans++;
-			s.push(right);
-		} else{
-			while(!s.empty()&&s.top()<right){
-				ans += s.size();
+		} else if(s.top().V == m){
+			ans += s.top().Q++;
+			if(s.size() > 1)
+				ans++;
+		} else {
+			while(!s.empty()&&s.top().V<m){
+				ans += s.top().Q;
 				s.pop();
 			}
-			s.push(right);
+			if(s.empty()){
+				s.push(make_pair(m, 1));
+			} else if(s.top().V > m){
+				s.push(make_pair(m, 1));
+				ans++;
+			} else if(s.top().V == m){
+				ans += s.top().Q++;
+				if(s.size() > 1)
+					ans++;
+			}
 		}
-		cout << N << " "  << s.top() << " : " << ans << '\n';
 	}
 	cout << ans;
 	return 0;
