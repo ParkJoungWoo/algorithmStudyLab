@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <sstream> 
+#include <algorithm>
 using namespace std;
 int main(){
 	// cin, cout practice
@@ -117,6 +118,13 @@ int main(){
 	int bigNum = 2100000000;
 	cout << "숫자를 문자열로" << '\n';
 	cout << bigNum << " " << to_string(bigNum) << '\n';
+	cout << "------------" << '\n';
+	
+	cout << "문자열 수정하기" << '\n';
+	string re_placer = "a,b,c,d,e";
+	cout << re_placer << endl;
+	replace(re_placer.begin(), re_placer.end(), ',', ' ');
+	cout << re_placer << endl;
 	cout << "------------" << '\n';
 	return 0;
 }
