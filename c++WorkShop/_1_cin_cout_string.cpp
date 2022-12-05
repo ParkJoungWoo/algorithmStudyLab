@@ -126,6 +126,12 @@ int main(){
 	replace(re_placer.begin(), re_placer.end(), ',', ' ');
 	cout << re_placer << endl;
 	cout << "------------" << '\n';
+	
+	cout << "공백이 포함된 문자열 입력" << '\n';
+	string blanker;
+	getline(cin, blanker);
+	cout << blanker << endl;
+	cout << "------------" << '\n';
 	return 0;
 }
 /*
@@ -159,4 +165,7 @@ changeString으로 수정(길이 차이는 상관 X)
  -> 문자열로 파싱하면 문자열, int, char등 다른 자료형으로 받으면 그 형식에 맞게 나눈다. 
  
  숫자를 문자열로 수정하기 to_string 
+ 
+ 공백이 포함된 문자열 입력받기
+ getline(cin, str); 
 */
