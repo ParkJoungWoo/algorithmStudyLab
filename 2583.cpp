@@ -3,6 +3,7 @@
 #include <queue>
 #include <utility>
 #include <vector>
+#include <algorithm>
 #define X first
 #define Y second
 using namespace std;
@@ -23,8 +24,8 @@ int main(void){
 		cin >> x1 >> y1 >> x2 >> y2;
 		y1 = M-y1;
 		y2 = M-y2;
-		for(int i=y2;i<=y1;i++)
-			for(int j=x1;j<=x2;j++){
+		for(int i=y2;i<y1;i++)
+			for(int j=x1;j<x2;j++){
 				paper[i][j]=1;
 			}
 	}
@@ -36,7 +37,7 @@ int main(void){
 				continue;
 			q.push({j,i});
 			visited[i][j]=1;
-			int size=1;
+			int size=0;
 			while(!q.empty()){
 				int x = q.front().X;
 				int y = q.front().Y;
@@ -55,13 +56,8 @@ int main(void){
 			v.push_back(size);
 		}
 	}
-	for(int i=0;i<M;i++){
-		for(int j=0;j<N;j++)
-			cout << paper[i][j];
-		cout << '\n';
-	}
-		
 	cout << ans << '\n';
+	sort(v.begin(),v.end());
 	for(auto a=v.begin(); a!=v.end(); a++)
 		cout << *a << " ";
 }
