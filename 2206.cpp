@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 #include <iostream>
-#include <queue>
+#include <stack>
 #include <algorithm>
+#define INF 1000000000
 using namespace std;
 int N,M;
 int board[1000][1000];
@@ -11,8 +12,8 @@ struct m{
 	int Y;
 	bool hasBreak;
 };
-queue<m>q;
-stack<int>s;
+stack<m>s;
+long ans = INF;
 int main(){
 	ios::sync_with_stdio(0);
 	cin.tie(0);
@@ -25,39 +26,33 @@ int main(){
 		for(int j=0;j<M;j++)
 			board[i][j]=s[j]-'0';
 	}
-	q.push({0,0,0});
+	s.push({0,0,0});
 	visited[0][0]=1;
-	while(!q.empty()){
-		int x = q.front().X;
-		int y = q.front().Y;
-		bool bk = q.front().hasBreak;
-		q.pop();
+	while(!s.empty()){
+		int x = s.top().X;
+		int y = s.top().Y;
+		bool bk = s.top().hasBreak;
+		s.pop();
 		if(x==N-1 && y==M-1){
-			if(s.empty())
-				s.push(visited[x][y]);
-			else{
-				if(s.top() > visited[x][y]){
-					s.pop();
-					s.push(visited[x][y]);
-				}
-			}
+			if(visited[x][y] < ans)
+				ans = visited[x][y];
 		}
 		for(int i=0;i<4;i++){
 			if(x+dx[i]<0||y+dy[i]<0||x+dx[i]>=N||y+dy[i]>=M)
 				continue;
 			if(visited[x][y]+1 >= visited[x+dx[i]][y+dy[i]] && visited[x+dx[i]][y+dy[i]])
 				continue;
-			if(bk==0){
-				if(board[x+dx[i]][y+dy[i]]){
-					q.push({x+dx[i],y+dy[i],1});
-					visited[x+dx[i]][y+dy[i]]=visited[x][y]+1;
-				} else{
-					q.push({x+dx[i],y+dy[i],bk});
+			if(bk){
+				if(board[x+dx[i]][y+dy[i]]==0){
+					s.push({x+dx[i],y+dy[i],bk});
 					visited[x+dx[i]][y+dy[i]]=visited[x][y]+1;
 				}
 			} else{
-				if(board[x+dx[i]][y+dy[i]]==0){
-					q.push({x+dx[i],y+dy[i],bk});
+				if(board[x+dx[i]][y+dy[i]]){
+					s.push({x+dx[i],y+dy[i],1});
+					visited[x+dx[i]][y+dy[i]]=visited[x][y]+1;
+				} else{
+					s.push({x+dx[i],y+dy[i],bk});
 					visited[x+dx[i]][y+dy[i]]=visited[x][y]+1;
 				}
 			}
@@ -70,8 +65,6 @@ int main(){
 //		}
 //		cout << '\n';
 	}
-	if(s.empty())
-		cout << -1;
-	else
-		cout << s.top();
+	ans = (ans==INF) ? -1 : ans;
+	cout << ans;
 }

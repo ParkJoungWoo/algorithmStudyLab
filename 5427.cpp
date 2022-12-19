@@ -6,7 +6,6 @@
 #define X first
 #define Y second
 #define EMPTY '.'
-#define WALL '#'
 #define FIRE '*'
 #define MAN '@'
 #define FAIL "IMPOSSIBLE"
@@ -15,8 +14,8 @@ int T,W,H;
 int userX, userY;
 int wall[1000][1000];
 int visited[1000][1000];
-//queue<pair<int,int>>q;
-deque<pair<int,int>>q;
+queue<pair<int,int>>q;
+//deque<pair<int,int>>q;
 int main(void){
 	ios::sync_with_stdio(0);
 	cin.tie(0);
@@ -30,48 +29,51 @@ int main(void){
 			cin >> input;
 			for(int j=0;j<W;j++){
 				wall[i][j] = input[j];
-				if(input[j]==FIRE){
-					q.push_back({j,i});
-					visited[i][j]=-1;
-				} else if(input[j]==MAN){
-					userX = j;
-					userY = i;
+				if(input[j]==MAN){
+					userX = i;
+					userY = j;
 					visited[i][j]=1;
-				} else if(input[j]==WALL){
+				} else if(input[j]==EMPTY){
+					continue;
+				} else{
+					if(input[j]==FIRE)
+						q.push({i,j});
 					visited[i][j]=-1;
 				}
 			}
 		}
-		q.push_front({userX, userY});
+		q.push({userX, userY});
 		while(!q.empty()){
 			int x = q.front().X;
 			int y = q.front().Y;
-			if((visited[y][x]>0)&&(x==0||x==W-1||y==0||y==H-1)){
-				cout << visited[y][x] << '\n';
-				break;
+			if(visited[x][y]>0&&(x==0 || x==H-1 || y==0 || y==W-1)){
+				if((H==1 && W==1) || (H!=1 && W!=1)){
+					cout << visited[x][y] << '\n';
+					break;	
+				} else if(W==1&&(x==0 || x==H-1)){
+					cout << visited[x][y] << '\n';
+					break;
+				} else if(H==1&&(y==0 || y==W-1)){
+					cout << visited[x][y] << '\n';
+					break;
+				}			
 			}
-			q.pop_front();
+			q.pop();
 			for(int i=0;i<4;i++){
-				if(dx[i]+x<0||dy[i]+y<0||dx[i]+x>=W||dy[i]+y>=H)
+				if(dx[i]+x<0||dy[i]+y<0||dx[i]+x>=H||dy[i]+y>=W)
 					continue;
-				if(visited[dy[i]+y][dx[i]+x] != 0)
+				if(visited[dx[i]+x][dy[i]+y])
 					continue;
-				if(visited[y][x] > 0)
-					visited[dy[i]+y][dx[i]+x] = visited[y][x]+1;
+				if(visited[x][y] > 0)
+					visited[dx[i]+x][dy[i]+y] = visited[x][y]+1;
 				else
-					visited[dy[i]+y][dx[i]+x] = -1;
-				q.push_back({dx[i]+x,dy[i]+y});	
+					visited[dx[i]+x][dy[i]+y] = -1;
+				q.push({dx[i]+x,dy[i]+y});	
 			}	
-//			for(int i=0;i<H;i++){
-//				for(int j=0;j<W;j++)
-//					cout << visited[i][j];
-//				cout << '\n';
-//			}
-//			cout << '\n';
 		}
 		if(q.empty())
 			cout << FAIL << '\n';
-		q = deque<pair<int,int>>();
+		q = queue<pair<int,int>>();
 		for(int i=0;i<H;i++)
 			fill(visited[i],visited[i]+W,0);
 	}
