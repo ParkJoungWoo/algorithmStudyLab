@@ -1,7 +1,8 @@
     # 코딩테스트 오답노트입니다.
 
 ***풀지 못했거나 제한시간에 못풀었거나 다시 고민해보고 싶은 문제를 정리합니다***
-
+## QUEUE
+[프린터](https://school.programmers.co.kr/learn/courses/30/lessons/42587)
 ## BFS
 [불](https://www.acmicpc.net/problem/5427)
 ```
@@ -34,3 +35,4 @@ ex) ABCD와 Z123은 자리수 합으로 비교가 가능한가? -> 이 질문에
 [영어끝말잇기](https://school.programmers.co.kr/learn/courses/30/lessons/12981)
 [행렬의 곱셈](https://school.programmers.co.kr/learn/courses/30/lessons/12949)
 [캐시](https://school.programmers.co.kr/learn/courses/30/lessons/17680)
+[뉴스클러스팅](https://school.programmers.co.kr/learn/courses/30/lessons/17677?language=c++)
