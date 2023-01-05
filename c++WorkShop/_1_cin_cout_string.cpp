@@ -7,6 +7,14 @@ int main(){
 	// cin, cout practice
 	// cout에서 개행을 할때 escape sequence를 사용하자!
 	// endl는 실행시간을 잡아 먹는다. 
+	
+	// 문자열의 요소 교환? 
+	string exchanges;
+	cout << "문자열 입력 : ";
+	cin >> exchanges;
+	exchanges[0] = 'X';
+	cout << exchanges << '\n';
+	
 	int number = 0;
 	cout << "숫자입력 : ";
 	cin >> number;
