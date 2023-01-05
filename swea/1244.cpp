@@ -7,27 +7,33 @@ int main(int argc, char** argv){
 	cin.tie(0);
 	int N,T;
 	cin >> T;
+//	T = 10;
 	for(int i=1;i<=T;i++){
 		string s;
 		cin >> s >> N;
-		for(int k=0;k<s.length();k++){
-			int isMax=k;
-			for(int j=k;j<s.length();j++){
-				if(s[j] < s[isMax])
-					continue;
-				else if(s[j] == s[isMax]) 
-					isMax = j;
-				else if(s[j] > s[isMax]) 
-					isMax = j;
+		if(N >= s.length()){
+			for(int j=0;j<s.length();j++){
+				int tmp1, tmp = j;
+				for(int k=j+1;k<s.length();k++){
+					if(s[tmp] <= s[k])
+						tmp = k;
+				}
+				tmp1 = s[j];
+				s[j] = s[tmp];
+				s[tmp] = tmp1;
 			}
-			if(s[isMax] > s[k]){
-				char tmp = s[k];
-				s[k] = s[isMax];
-				s[isMax] = tmp;
-				N--;
-			} 
-			if(N<1)
-				break;
+		} else {
+			sort(s.begin(), s.begin()+N);
+			for(int j=0;j<s.length()&&j<N;j++){
+				int tmp1, tmp = j;
+				for(int k=j+1;k<s.length();k++){
+					if(s[tmp] <= s[k])
+						tmp = k;
+				}
+				tmp1 = s[j];
+				s[j] = s[tmp];
+				s[tmp] = tmp1;
+			}
 		}
 		cout << '#' << i << ' ' << s << '\n';
 	}
